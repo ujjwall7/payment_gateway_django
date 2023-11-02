@@ -4,4 +4,4 @@ from . models import Coffee
 
 @admin.register(Coffee)
 class CoffeeDisplay(admin.ModelAdmin):
-    list_display = ('name', 'amount', 'order_id', 'paid', )
+    list_display = ('name', 'amount', 'order_id', 'email', 'paid', )
