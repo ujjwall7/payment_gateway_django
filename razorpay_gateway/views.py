@@ -34,19 +34,36 @@ def success(request):
         # print(a)
         order_id = ""
 
+        data = {}
         for key , value in a.items():
             if key=="razorpay_order_id":
+                data['razorpay_order_id'] = value
+
                 order_id = value
-                break
+
+            elif key=="razorpay_payment_id":
+                data['razorpay_payment_id'] = value
+
+            elif key=="razorpay_signature":
+                data['razorpay_signature'] = value
+
         user = Coffee.objects.filter(order_id=order_id).last()
         user.paid=True
         user.save()
 
-        msg_plain = render_to_string('razorpay/email.txt')
-        msg_html = render_to_string('razorpay/email.html')
+        client = razorpay.Client(auth=("rzp_test_SjQuoGgh17Ps5G" , "BmNrvpc0S7W7aqGkFn8oknrw"))
+        check = client.utility.verify_payment_signature(data)
+        print(check)
 
-        send_mail("Your Order Was Confirm! Thanku" , msg_plain , settings.EMAIL_HOST_USER , 
-                  [user.email] , html_message = msg_html) 
+        if check is True:
+            msg_plain = render_to_string('razorpay/email.txt')
+            msg_html = render_to_string('razorpay/email.html')
+
+            send_mail("Your Order Was Confirm! Thanku" , msg_plain , settings.EMAIL_HOST_USER , 
+                      [user.email] , html_message = msg_html)
+        else:
+            return render(request, "razorpay/error.html")
+        
     return render(request, "razorpay/success.html")
 
 
