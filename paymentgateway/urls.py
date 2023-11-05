@@ -7,8 +7,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('razorpay/', include('razorpay_gateway.urls')),
-    path('', include('razorpay_gateway.urls')),
+    path('razorpay/', include('razorpay_gateway.urls')),
+    path('instamojo/', include('instamojo.urls')),
 ]
 
 if settings.DEBUG:

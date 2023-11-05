@@ -51,6 +51,7 @@ def success(request):
         user.paid=True
         user.save()
 
+        #signature verification
         client = razorpay.Client(auth=("rzp_test_SjQuoGgh17Ps5G" , "BmNrvpc0S7W7aqGkFn8oknrw"))
         check = client.utility.verify_payment_signature(data)
         print(check)
