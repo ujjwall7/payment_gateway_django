@@ -29,7 +29,7 @@ def order(request, product_id):
             purpose='Order Process',
             buyer_name='ujjwal sharma',
             email="ujjwal@gmail.com",
-            redirect_url="http://127.0.0.1:8000/instamojo/order-success/"
+            redirect_url="http://24.144.88.78/instamojo/order-success/"
         )
         print(response)
         order_obj.order_id=response['payment_request']['id']
